@@ -15,4 +15,6 @@
 @property (nonatomic, retain) ACMagnifyingGlass *magnifyingGlass;
 @property (nonatomic, assign) CGFloat magnifyingGlassShowDelay;
 - (void)updateMagnifyingGlassAtPoint:(CGPoint)point;
+- (void)removeMagnifyingGlass;
+- (void)addMagnifyingGlassAtPoint:(CGPoint)point;
 @end
