@@ -38,22 +38,29 @@ static CGFloat const kACMagnifyingViewDefaultShowDelay = 0.5;
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 	UITouch *touch = [touches anyObject];
-	self.touchTimer = [NSTimer scheduledTimerWithTimeInterval:magnifyingGlassShowDelay
-													   target:self
-													 selector:@selector(addMagnifyingGlassTimer:)
-													 userInfo:[NSValue valueWithCGPoint:[touch locationInView:self]]
-													  repeats:NO];
+    if ([touch.view isKindOfClass:ACMagnifyingView.class]) {
+        self.touchTimer = [NSTimer scheduledTimerWithTimeInterval:magnifyingGlassShowDelay
+                                                           target:self
+                                                         selector:@selector(addMagnifyingGlassTimer:)
+                                                         userInfo:[NSValue valueWithCGPoint:[touch locationInView:self]]
+                                                          repeats:NO];
+    }
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
 	UITouch *touch = [touches anyObject];
-	[self updateMagnifyingGlassAtPoint:[touch locationInView:self]];
+    if ([touch.view isKindOfClass:ACMagnifyingView.class]) {
+        [self updateMagnifyingGlassAtPoint:[touch locationInView:self]];
+    }
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-	[self.touchTimer invalidate];
-	self.touchTimer = nil;
-	[self removeMagnifyingGlass];
+    UITouch *touch = [touches anyObject];
+    if ([touch.view isKindOfClass:ACMagnifyingView.class]) {
+        [self.touchTimer invalidate];
+        self.touchTimer = nil;
+        [self removeMagnifyingGlass];
+    }
 }
 
 #pragma mark - private functions
